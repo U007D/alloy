@@ -7,8 +7,10 @@ use alloy_signer::utils::secret_key_to_address;
 use alloy_signer::Signer;
 use k256::{
     ecdsa::{self, SigningKey},
+    elliptic_curve::Generate,
     FieldBytes, NonZeroScalar, SecretKey as K256SecretKey,
 };
+#[cfg(feature = "keystore")]
 use rand::{CryptoRng, Rng};
 use std::str::FromStr;
 
@@ -53,16 +55,19 @@ impl LocalSigner<SigningKey> {
         SigningKey::from_slice(bytes).map(Self::from_signing_key)
     }
 
-    /// Creates a new random keypair seeded with [`rand::thread_rng()`].
+    /// Creates a new random keypair seeded with [`rand_10::rng()`].
     #[inline]
     pub fn random() -> Self {
-        Self::random_with(&mut rand::thread_rng())
+        Self::random_with(&mut rand_10::rng())
     }
 
     /// Creates a new random keypair seeded with the provided RNG.
     #[inline]
-    pub fn random_with<R: Rng + CryptoRng>(rng: &mut R) -> Self {
-        Self::from_signing_key(SigningKey::random(rng))
+    pub fn random_with<R>(rng: &mut R) -> Self
+    where
+        R: rand_10::CryptoRng,
+    {
+        Self::from_signing_key(SigningKey::generate_from_rng(rng))
     }
 
     /// Borrow the secret [`NonZeroScalar`] value for this key.
@@ -93,7 +98,7 @@ impl LocalSigner<SigningKey> {
     /// array.
     #[inline]
     pub fn public_key(&self) -> B512 {
-        B512::from_slice(&self.credential.verifying_key().to_encoded_point(false).as_bytes()[1..])
+        B512::from_slice(&self.credential.verifying_key().to_sec1_point(false).as_bytes()[1..])
     }
 
     /// Converts this `PrivateKeySigner` (k256-based) to a
@@ -334,7 +339,7 @@ mod tests {
     fn signs_msg() {
         let message = "Some data";
         let hash = alloy_primitives::utils::eip191_hash_message(message);
-        let key = LocalSigner::<SigningKey>::random_with(&mut rand::thread_rng());
+        let key = LocalSigner::<SigningKey>::random_with(&mut rand_10::rng());
         let address = key.address;
 
         // sign a message
@@ -432,21 +437,21 @@ mod tests {
         assert_eq!(signer_str.chain_id, signer_b256.chain_id);
         assert_eq!(signer_str.credential, signer_b256.credential);
         assert_eq!(signer_str.to_bytes(), key);
-        assert_eq!(signer_str.to_field_bytes(), key.0.into());
+        assert_eq!(signer_str.to_field_bytes().as_slice(), key.as_slice());
 
         let signer_slice = LocalSigner::<SigningKey>::from_slice(&key[..]).unwrap();
         assert_eq!(signer_slice.address, signer_b256.address);
         assert_eq!(signer_slice.chain_id, signer_b256.chain_id);
         assert_eq!(signer_slice.credential, signer_b256.credential);
         assert_eq!(signer_slice.to_bytes(), key);
-        assert_eq!(signer_slice.to_field_bytes(), key.0.into());
+        assert_eq!(signer_slice.to_field_bytes().as_slice(), key.as_slice());
 
         let signer_field_bytes = LocalSigner::from_field_bytes((&key.0).into()).unwrap();
         assert_eq!(signer_field_bytes.address, signer_b256.address);
         assert_eq!(signer_field_bytes.chain_id, signer_b256.chain_id);
         assert_eq!(signer_field_bytes.credential, signer_b256.credential);
         assert_eq!(signer_field_bytes.to_bytes(), key);
-        assert_eq!(signer_field_bytes.to_field_bytes(), key.0.into());
+        assert_eq!(signer_field_bytes.to_field_bytes().as_slice(), key.as_slice());
     }
 
     #[test]

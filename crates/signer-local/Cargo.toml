@@ -30,6 +30,7 @@ alloy-signer.workspace = true
 
 k256.workspace = true
 rand.workspace = true
+rand-10.workspace = true
 thiserror.workspace = true
 async-trait.workspace = true
 zeroize = { workspace = true, optional = true, features = [
