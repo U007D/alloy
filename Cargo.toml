@@ -140,7 +140,7 @@ serde = { version = "1.0.226", default-features = false, features = [
     "alloc",
 ] }
 serde_json = { version = "1.0", default-features = false, features = ["alloc"] }
-serde_with = { version = "3", default-features = false, features = ["macros"] }
+serde_with = { git = "https://github.com/surus-inc/3rd_party-serde_with", default-features = false, features = ["macros"] }
 
 # bincode
 bincode = "2.0"

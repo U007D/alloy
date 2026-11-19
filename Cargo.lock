@@ -121,7 +121,7 @@ dependencies = [
  "secp256k1 0.30.0",
  "serde",
  "serde_json",
- "serde_with",
+ "serde_with 3.24.0 (git+https://github.com/surus-inc/3rd_party-serde_with)",
  "thiserror 2.0.21",
 ]
 
@@ -262,7 +262,7 @@ dependencies = [
  "k256 0.13.4",
  "rand 0.8.8",
  "serde",
- "serde_with",
+ "serde_with 3.24.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.21",
 ]
 
@@ -318,7 +318,7 @@ dependencies = [
  "ethereum_ssz_derive",
  "serde",
  "serde_json",
- "serde_with",
+ "serde_with 3.24.0 (git+https://github.com/surus-inc/3rd_party-serde_with)",
  "sha2 0.10.9",
 ]
 
@@ -349,7 +349,7 @@ dependencies = [
  "borsh",
  "serde",
  "serde_json",
- "serde_with",
+ "serde_with 3.24.0 (git+https://github.com/surus-inc/3rd_party-serde_with)",
 ]
 
 [[package]]
@@ -683,7 +683,7 @@ dependencies = [
  "ethereum_ssz_derive",
  "serde",
  "serde_json",
- "serde_with",
+ "serde_with 3.24.0 (git+https://github.com/surus-inc/3rd_party-serde_with)",
  "similar-asserts",
  "thiserror 2.0.21",
  "tree_hash",
@@ -699,7 +699,7 @@ dependencies = [
  "derive_more",
  "serde",
  "serde_json",
- "serde_with",
+ "serde_with 3.24.0 (git+https://github.com/surus-inc/3rd_party-serde_with)",
 ]
 
 [[package]]
@@ -748,7 +748,7 @@ dependencies = [
  "rmp-serde",
  "serde",
  "serde_json",
- "serde_with",
+ "serde_with 3.24.0 (git+https://github.com/surus-inc/3rd_party-serde_with)",
  "similar-asserts",
  "thiserror 2.0.21",
 ]
@@ -765,7 +765,7 @@ dependencies = [
  "bincode",
  "serde",
  "serde_json",
- "serde_with",
+ "serde_with 3.24.0 (git+https://github.com/surus-inc/3rd_party-serde_with)",
  "similar-asserts",
 ]
 
@@ -1437,7 +1437,7 @@ dependencies = [
  "ark-std 0.6.0",
  "digest 0.10.7",
  "num-bigint",
- "serde_with",
+ "serde_with 3.24.0 (registry+https://github.com/rust-lang/crates.io-index)",
 ]
 
 [[package]]
@@ -6632,7 +6632,27 @@ dependencies = [
  "schemars 1.2.2",
  "serde_core",
  "serde_json",
- "serde_with_macros",
+ "serde_with_macros 3.24.0 (registry+https://github.com/rust-lang/crates.io-index)",
+ "time",
+]
+
+[[package]]
+name = "serde_with"
+version = "3.24.0"
+source = "git+https://github.com/surus-inc/3rd_party-serde_with#4bd130a6361b7a846c2b74d7d2a94fb01b70215e"
+dependencies = [
+ "base64 0.23.1",
+ "bs58",
+ "chrono",
+ "hex",
+ "indexmap 1.9.3",
+ "indexmap 2.14.2",
+ "jiff",
+ "schemars 0.9.0",
+ "schemars 1.2.2",
+ "serde_core",
+ "serde_json",
+ "serde_with_macros 3.24.0 (git+https://github.com/surus-inc/3rd_party-serde_with)",
  "time",
 ]
 
@@ -6641,6 +6661,17 @@ name = "serde_with_macros"
 version = "3.24.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "3e17bbc68e28663bbbb90df47e058aa7eda4fb445b89fe70457bb94fbccf6e49"
+dependencies = [
+ "darling 0.24.1",
+ "proc-macro2",
+ "quote",
+ "syn 3.0.6",
+]
+
+[[package]]
+name = "serde_with_macros"
+version = "3.24.0"
+source = "git+https://github.com/surus-inc/3rd_party-serde_with#4bd130a6361b7a846c2b74d7d2a94fb01b70215e"
 dependencies = [
  "darling 0.24.1",
  "proc-macro2",
@@ -7657,7 +7688,7 @@ dependencies = [
  "reqwest 0.12.28",
  "serde",
  "serde_json",
- "serde_with",
+ "serde_with 3.24.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "thiserror 2.0.21",
  "tokio",
  "turnkey_api_key_stamper",
